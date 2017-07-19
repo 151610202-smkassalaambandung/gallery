@@ -177,8 +177,10 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        Collective\Html\HtmlServiceProvider::class
+        //add on
+        Collective\Html\HtmlServiceProvider::class,
+        //add on
+        Laratrust\LaratrustServiceProvider::class,
     ],
 
     /*
@@ -228,6 +230,8 @@ return [
         //addon
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        //add on
+        'Laratrust' => Laratrust\LaratrustFacade::class,
 
      
 
