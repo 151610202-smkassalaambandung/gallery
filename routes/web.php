@@ -17,9 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'PegawaisController@index');
+Route::group(['middleware' => 'web'], function() {
 
 Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
-  //Route Diisi disini....
   Route::resource('pegawais', 'PegawaisController');
+   });
 });

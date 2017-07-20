@@ -19,10 +19,8 @@ class BarangsSeeder extends Seeder
         $pegawai3= Pegawai::create(['nama_pegawai'=>'Aam Amiruddin ']);
         
         //Sample buku
-        $barang1= Barang::create(['nama_barang'=>'AC','jumlah_barang'=>3,'pegawai_id'=>$pegawai1->id]);
-        $barang2= Barang::create(['nama_barang'=>'TV','jumlah_barang'=>3,'pegawai_id'=>$pegawai2->id]);
-        $barang3= Barang::create(['nama_barang'=>'Lemari','jumlah_barang'=>3,'pegawai_id'=>$pegawai3->id]);
-        $barang4= Barang::create(['nama_barang'=>'Sofa','jumlah_barang'=>3,'pegawai_id'=>$pegawai1->id]);
-           
+        $barang1= Barang::create(['nama_barang'=>'AC','jumlah_barang'=>3,'harga'=>30000,'pegawai_id'=>$pegawai1->id]);
+        $barang2= Barang::create(['nama_barang'=>'TV','jumlah_barang'=>3,'harga'=>40000,'pegawai_id'=>$pegawai2->id]);
+       
     }
 }

@@ -181,6 +181,9 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         //add on
         Laratrust\LaratrustServiceProvider::class,
+        //add on
+        Yajra\Datatables\DatatablesServiceProvider::class,
+ 
     ],
 
     /*

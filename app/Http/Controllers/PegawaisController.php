@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Pegawai;
+use Yajra\Datatables\Html\Builder;
+use Yajra\Datatables\Datatables;
+use Session;
+
 
 class PegawaisController extends Controller
 {
@@ -11,9 +16,23 @@ class PegawaisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index(Request $request, Builder $htmlBuilder)
     {
         //
+        if ($request->ajax()){
+            $pegawais = Pegawai::select(['id', 'nama_pegawai']);
+            return Datatables::of($pegawais)
+            ->addColumn('action',function($pegawai){
+                return view('datatable._action', [
+                    'edit_url'=> route('pegawais.edit, $pegawai->id'),
+                    ]);
+            })->make(true);
+        }
+        $html = $htmlBuilder
+        ->addColumn(['data'=>'nama_pegawai','name'=>'nama_pegawai','title'=>'Nama'])
+        ->addColumn(['data'=>'action','name'=>'action','title'=>'','orderable'=>false,'searchable'=>false]);
+ 
+        return view('pegawais.index')->with(compact('html'));
     }
 
     /**
@@ -24,6 +43,8 @@ class PegawaisController extends Controller
     public function create()
     {
         //
+        return view('pegawais.create');
+  
     }
 
     /**
@@ -35,6 +56,10 @@ class PegawaisController extends Controller
     public function store(Request $request)
     {
         //
+         $this->validate($request,['nama_pegawai'=>'required|unique:pegawais']);
+        $pegawai = Pegawai::create($request->only('nama_pegawai'));
+        Session::flash("flash_notification",["level"=>"success","message"=>"Berhasil menyimpan $pegawai->nama_pegawai"]);
+        return redirect()->route('pegawais.index');
     }
 
     /**

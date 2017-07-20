@@ -18,7 +18,6 @@
     <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
 
 
-    <link href="/css/app.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -53,6 +52,9 @@
                         @if (Auth::check())
                         <li><a href="{{ url('/home')}}">Dasboard</a></li>
                         @endif
+                       @role('admin')
+                       <li><a href="{{ route('pegawais.index')}}">Pegawai</a></li>
+                       @endrole
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -86,7 +88,7 @@
                 </div>
             </div>
         </nav>
-
+        @include('layouts._flash')
         @yield('content')
     </div>
 
