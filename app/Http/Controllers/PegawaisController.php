@@ -24,7 +24,9 @@ class PegawaisController extends Controller
             return Datatables::of($pegawais)
             ->addColumn('action',function($pegawai){
                 return view('datatable._action', [
-                    'edit_url'=> route('pegawais.edit, $pegawai->id'),
+                    'model'   => $pegawai,
+                    'form_url'=> route('pegawais.destroy',$pegawai->id),
+                    'edit_url'=> route('pegawais.edit', $pegawai->id),
                     ]);
             })->make(true);
         }
@@ -82,6 +84,9 @@ class PegawaisController extends Controller
     public function edit($id)
     {
         //
+        $pegawai = Pegawai::find($id);
+        return view('pegawais.edit')->with(compact('pegawai'));
+    
     }
 
     /**
@@ -94,6 +99,14 @@ class PegawaisController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, ['nama_pegawai' =>'required|unique:pegawais,nama_pegawai,'.$id]);
+        $pegawai = Pegawai::find($id);
+        $pegawai->update($request->only('nama_pegawai'));
+        Session::flash('flash_notification', [
+            "level"=>"success", 
+            "message"=>"Berhasil menyimpan $pegawai->nama_pegawai"]);
+        return redirect()->route('pegawais.index');
+
     }
 
     /**
@@ -105,5 +118,10 @@ class PegawaisController extends Controller
     public function destroy($id)
     {
         //
+       if(!Pegawai::destroy($id)) return redirect()->back();
+
+        Session::flash("flash_notification", ["level"=>"success","message"=>"Pegawai berhasil dihapus"]);
+        return redirect()->route('pegawais.index');
+    
     }
 }
